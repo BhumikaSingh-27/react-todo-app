@@ -1,10 +1,10 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { fakeFetch } from "../todolist";
 
 export const TodoContext = createContext();
 
 export const TodoContextProvider = ({ children }) => {
-  const [data, setData] = useState([]);
+  const [tododata, setTodoData] = useState([]);
   const [task, setTask] = useState({ name: "", desc: "" });
   const [state, setState] = useState({ isLoading: false, isError: null });
 
@@ -12,11 +12,12 @@ export const TodoContextProvider = ({ children }) => {
     (async () => {
       setState({ ...state, isLoading: true });
       try {
-        const { status, data } = await fakeFetch(
-          "https://example.com/api/todos"
-        );
+        const {
+          status,
+          data: { todos },
+        } = await fakeFetch("https://example.com/api/todos");
         if (status === 200) {
-          setData(data.todos);
+          setTodoData(todos);
           setState({ isLoading: false, isError: null });
         }
       } catch (e) {
@@ -26,15 +27,33 @@ export const TodoContextProvider = ({ children }) => {
     })();
   }, []);
 
+  //   useEffect(() => {
+  //     (async () => {
+  //       setState({ ...state, isLoading: true });
+  //       try {
+  //         const { status, data } = await fakeFetch(
+  //           "https://example.com/api/todos"
+  //         );
+  //         if (status === 200) {
+  //           setData(data.todos);
+  //           setState({ isLoading: false, isError: null });
+  //         }
+  //       } catch (e) {
+  //         setState({ isLoading: false, isError: e.message });
+  //         console.log(e);
+  //       }
+  //     })();
+  //   }, [state]);
+
   const markDone = (todoId) => {
-    const todos = data.map((todo) =>
+    const todos = tododata.map((todo) =>
       todo.id === todoId ? { ...todo, isCompleted: !todo.isCompleted } : todo
     );
-    setData(todos);
+    setTodoData(todos);
   };
 
   const addTodoItem = () => {
-    setData((data) => [
+    setTodoData((data) => [
       ...data,
       {
         id: data.length + 1,
@@ -46,10 +65,10 @@ export const TodoContextProvider = ({ children }) => {
     setTask({ ...task, name: "", desc: "" });
   };
 
-  console.log("newData", data);
+  console.log("newData", tododata);
   return (
     <TodoContext.Provider
-      value={{ data, markDone, state, setTask, task, addTodoItem }}
+      value={{ tododata, markDone, state, setTask, task, addTodoItem }}
     >
       {children}
     </TodoContext.Provider>

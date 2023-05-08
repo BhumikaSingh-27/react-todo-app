@@ -11,7 +11,7 @@ export const fakeFetch = (url) => {
                 id: 1,
                 title: "Complete practice set 7",
                 description: "Practice set 7 of React",
-                isCompleted: true,
+                isCompleted: false,
               },
               {
                 id: 2,
@@ -23,7 +23,7 @@ export const fakeFetch = (url) => {
                 id: 3,
                 title: "Watch recording",
                 description: "Live session recording of React",
-                isCompleted: true,
+                isCompleted: false,
               },
               {
                 id: 4,
@@ -41,7 +41,7 @@ export const fakeFetch = (url) => {
                 id: 6,
                 title: "Watch a movie",
                 description: "Watch an old movie from my watchlist",
-                isCompleted: true,
+                isCompleted: false,
               },
             ],
           },

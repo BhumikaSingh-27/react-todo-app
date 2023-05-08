@@ -3,8 +3,8 @@ import { TodoContext } from "../context/TodoContext";
 import { NavLink } from "react-router-dom";
 
 const Open = () => {
-  const { data } = useContext(TodoContext);
-  const openCount = data.filter(({ isCompleted }) => !isCompleted);
+  const { tododata } = useContext(TodoContext);
+  const openCount = tododata.filter(({ isCompleted }) => !isCompleted);
 
   return (
     <div>

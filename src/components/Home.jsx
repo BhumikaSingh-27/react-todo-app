@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { TodoContext } from "../context/TodoContext";
 
 const Home = () => {
-  const { data, markDone, state, setTask, task, addTodoItem } =
+  const { tododata, markDone, state, setTask, task, addTodoItem } =
     useContext(TodoContext);
 
   return (
@@ -19,7 +19,7 @@ const Home = () => {
             <input
               type="text"
               value={task.name}
-              onChange={(e) => setTask({ ...task, name: e.target.value, })}
+              onChange={(e) => setTask({ ...task, name: e.target.value })}
             />
             <br />
             <label>Description: </label>
@@ -30,12 +30,14 @@ const Home = () => {
             />
             <button onClick={addTodoItem}>Add</button>
           </div>
-          {data.map(({ id, title, description, isCompleted }) => {
+          {tododata.map(({ id, title, description, isCompleted }) => {
             return (
               <div className="container" key={id}>
-                <h3>{title}</h3>
-                <p>{description}</p>
-                <p>Status:{isCompleted ? "Done" : "Not Done"}</p>
+                <div style={{ textDecoration: isCompleted && "line-through" }}>
+                  <h3>{title}</h3>
+                  <p>{description}</p>
+                  <p>Status:{isCompleted ? "Done" : "Not Done"}</p>
+                </div>
                 <button onClick={() => markDone(id)}>
                   {isCompleted ? "Mark as Undone" : "Mark as Done"}
                 </button>
