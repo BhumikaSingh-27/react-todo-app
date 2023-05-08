@@ -4,9 +4,9 @@ import { TodoContext } from "../context/TodoContext";
 
 const Detail = () => {
   const { todoId } = useParams();
-  const { data } = useContext(TodoContext);
+  const { tododata } = useContext(TodoContext);
 
-  const todoDetail = data.find(({ id }) => id.toString() === todoId);
+  const todoDetail = tododata.find(({ id }) => id.toString() === todoId);
   console.log(todoDetail);
 
   return (
