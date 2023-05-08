@@ -53,16 +53,18 @@ export const TodoContextProvider = ({ children }) => {
   };
 
   const addTodoItem = () => {
-    setTodoData((data) => [
-      ...data,
-      {
-        id: data.length + 1,
-        title: task.name,
-        description: task.desc,
-        isCompleted: false,
-      },
-    ]);
-    setTask({ ...task, name: "", desc: "" });
+    if (task.name && task.desc) {
+      setTodoData((data) => [
+        ...data,
+        {
+          id: data.length + 1,
+          title: task.name,
+          description: task.desc,
+          isCompleted: false,
+        },
+      ]);
+      setTask({ ...task, name: "", desc: "" });
+    }
   };
 
   console.log("newData", tododata);
